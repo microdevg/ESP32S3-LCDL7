@@ -30,10 +30,65 @@ void create_screen_main() {
     {
         lv_obj_t *parent_obj = obj;
         {
-            lv_obj_t *obj = lv_label_create(parent_obj);
-            lv_obj_set_pos(obj, 356, 232);
-            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
-            lv_label_set_text_static(obj, "Hello, world!");
+            // Window
+            lv_obj_t *obj = lv_obj_create(parent_obj);
+            objects.window = obj;
+            lv_obj_set_pos(obj, 14, 11);
+            lv_obj_set_size(obj, 773, 458);
+            lv_obj_clear_flag(obj, LV_OBJ_FLAG_SCROLLABLE);
+            lv_obj_set_style_bg_color(obj, lv_color_hex(0xb9c0bb), LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_border_color(obj, lv_color_hex(0x312c2c), LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_border_width(obj, 22, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_width(obj, 773, LV_PART_MAIN | LV_STATE_DEFAULT);
+            lv_obj_set_style_height(obj, 458, LV_PART_MAIN | LV_STATE_DEFAULT);
+            {
+                lv_obj_t *parent_obj = obj;
+                {
+                    lv_obj_t *obj = lv_label_create(parent_obj);
+                    lv_obj_set_pos(obj, 445, 23);
+                    lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                    lv_label_set_text_static(obj, "Ejemplo Sensor temperatura");
+                }
+            }
+        }
+        {
+            // Panel_temperatura
+            lv_obj_t *obj = lv_obj_create(parent_obj);
+            objects.panel_temperatura = obj;
+            lv_obj_set_pos(obj, 98, 76);
+            lv_obj_set_size(obj, 256, 164);
+            lv_obj_clear_flag(obj, LV_OBJ_FLAG_SCROLLABLE);
+            {
+                lv_obj_t *parent_obj = obj;
+                {
+                    lv_obj_t *obj = lv_img_create(parent_obj);
+                    lv_obj_set_pos(obj, 47, -70);
+                    lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                    lv_img_set_src(obj, &img_temperatura_little);
+                    lv_img_set_zoom(obj, 200);
+                }
+                {
+                    // valor_temperatura
+                    lv_obj_t *obj = lv_obj_create(parent_obj);
+                    objects.valor_temperatura = obj;
+                    lv_obj_set_pos(obj, LV_PCT(0), LV_PCT(10));
+                    lv_obj_set_size(obj, LV_PCT(69), LV_PCT(90));
+                    lv_obj_set_style_border_color(obj, lv_color_hex(0xe0e0e0), LV_PART_MAIN | LV_STATE_DEFAULT);
+                    lv_obj_set_style_border_width(obj, 4, LV_PART_MAIN | LV_STATE_DEFAULT);
+                    {
+                        lv_obj_t *parent_obj = obj;
+                        {
+                            // numero
+                            lv_obj_t *obj = lv_label_create(parent_obj);
+                            objects.numero = obj;
+                            lv_obj_set_pos(obj, 2, 8);
+                            lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                            lv_obj_set_style_text_font(obj, &lv_font_montserrat_48, LV_PART_MAIN | LV_STATE_DEFAULT);
+                            lv_label_set_text(obj, "");
+                        }
+                    }
+                }
+            }
         }
     }
     
@@ -41,6 +96,15 @@ void create_screen_main() {
 }
 
 void tick_screen_main() {
+    {
+        const char *new_val = get_var_temperatura();
+        const char *cur_val = lv_label_get_text(objects.numero);
+        if (strcmp(new_val, cur_val) != 0) {
+            tick_value_change_obj = objects.numero;
+            lv_label_set_text(objects.numero, new_val);
+            tick_value_change_obj = NULL;
+        }
+    }
 }
 
 typedef void (*tick_screen_func_t)();

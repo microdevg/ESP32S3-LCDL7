@@ -1,7 +1,9 @@
 file(GLOB_RECURSE UI "./ui/*.c")
+file(GLOB_RECURSE IMGS "./ui/*.c")
 
 
-idf_component_register(SRCS ${UI} "display.c" "lvgl_port.c" "waveshare_rgb_lcd_port.c"
+
+idf_component_register(SRCS ${UI} ${IMGS} "display.c" "lvgl_port.c" "waveshare_rgb_lcd_port.c"
                     INCLUDE_DIRS "include"
                     REQUIRES esp_lcd "lvgl")
 

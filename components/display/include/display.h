@@ -11,3 +11,6 @@ esp_err_t display_show_example(void);
 
 
 esp_err_t display_ui_start();
+
+
+esp_err_t display_set_temperatura(float value);

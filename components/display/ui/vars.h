@@ -13,10 +13,11 @@ extern "C" {
 // Flow global variables
 
 enum FlowGlobalVariables {
-    FLOW_GLOBAL_VARIABLE_NONE
+    FLOW_GLOBAL_VARIABLE_TEMPERATURA = 0
 };
 
-// Native global variables
+extern char *get_var_temperatura();
+extern void set_var_temperatura(const char *value);
 
 #ifdef __cplusplus
 }

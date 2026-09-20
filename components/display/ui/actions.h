@@ -7,12 +7,6 @@
 extern "C" {
 #endif
 
-extern void action_inc_counter(lv_event_t * e);
-extern void action_dec_counter(lv_event_t * e);
-extern void action_show_keyboard_test_screen(lv_event_t * e);
-extern void action_show_main_screen(lv_event_t * e);
-
-
 #ifdef __cplusplus
 }
 #endif

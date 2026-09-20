@@ -3,6 +3,7 @@
 .AppleDouble
 .LSOverride
 .clangd
+*.lock
 component_managed/
 .*/
 # Directory metadata

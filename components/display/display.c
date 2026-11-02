@@ -22,7 +22,7 @@ esp_err_t display_ui_start(){
 
 
 esp_err_t display_refresh(){
-    ui_tick(); // Con esta funcion refresco pantalla
+ //   ui_tick(); // Con esta funcion refresco pantalla
     return ESP_OK;
 }
 

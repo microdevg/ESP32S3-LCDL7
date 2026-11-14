@@ -7,6 +7,8 @@
 #include "display.h"
 
 
+float temperature = 10;
+
 void app_main(void)
 {
     display_init();
@@ -14,6 +16,8 @@ void app_main(void)
 
     while(1){
         display_refresh();
+        temperature = temperature + 1.1;
+        display_set_temperature(temperature);
         vTaskDelay(500 / portTICK_PERIOD_MS);
 
     }

@@ -7,6 +7,19 @@
 #include <string.h>
 #include "ui/vars.h"
 
+#include "ui/actions.h"
+#include "ui/screens.h"
+
+void action_change_window(lv_event_t * e) {
+    // Agrega aquí tu lógica de LVGL, por ejemplo:
+    if(e->user_data == 0){
+        lv_scr_load(objects.main);
+    }  
+    else{
+        lv_scr_load(objects.options);
+    }
+}
+
 char temp[100] = {""};
 
 const char *get_var_temp() {

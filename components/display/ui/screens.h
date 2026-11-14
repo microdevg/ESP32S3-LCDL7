@@ -12,19 +12,27 @@ extern "C" {
 enum ScreensEnum {
     _SCREEN_ID_FIRST = 1,
     SCREEN_ID_MAIN = 1,
-    _SCREEN_ID_LAST = 1
+    SCREEN_ID_OPTIONS = 2,
+    _SCREEN_ID_LAST = 2
 };
 
 typedef struct _objects_t {
     lv_obj_t *main;
+    lv_obj_t *options;
     lv_obj_t *title;
+    lv_obj_t *title_1;
     lv_obj_t *obj0;
+    lv_obj_t *obj1;
+    lv_obj_t *obj2;
 } objects_t;
 
 extern objects_t objects;
 
 void create_screen_main();
 void tick_screen_main();
+
+void create_screen_options();
+void tick_screen_options();
 
 void tick_screen_by_id(enum ScreensEnum screenId);
 void tick_screen(int screen_index);

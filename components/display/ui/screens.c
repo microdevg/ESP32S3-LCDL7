@@ -161,9 +161,34 @@ void create_screen_options() {
                 {
                     lv_obj_t *obj = lv_obj_create(parent_obj);
                     lv_obj_set_pos(obj, 8, -2);
-                    lv_obj_set_size(obj, 711, 424);
+                    lv_obj_set_size(obj, 724, 424);
+                    lv_obj_clear_flag(obj, LV_OBJ_FLAG_CLICKABLE|LV_OBJ_FLAG_SCROLLABLE);
                     {
                         lv_obj_t *parent_obj = obj;
+                        {
+                            lv_obj_t *obj = lv_obj_create(parent_obj);
+                            lv_obj_set_pos(obj, 312, 105);
+                            lv_obj_set_size(obj, 356, 282);
+                            lv_obj_clear_flag(obj, LV_OBJ_FLAG_SCROLLABLE);
+                            {
+                                lv_obj_t *parent_obj = obj;
+                                {
+                                    lv_obj_t *obj = lv_label_create(parent_obj);
+                                    objects.obj3 = obj;
+                                    lv_obj_set_pos(obj, 142, 45);
+                                    lv_obj_set_size(obj, LV_SIZE_CONTENT, LV_SIZE_CONTENT);
+                                    lv_obj_set_style_text_font(obj, &lv_font_montserrat_48, LV_PART_MAIN | LV_STATE_DEFAULT);
+                                    lv_label_set_text(obj, "");
+                                }
+                                {
+                                    lv_obj_t *obj = lv_slider_create(parent_obj);
+                                    lv_obj_set_pos(obj, 18, 139);
+                                    lv_obj_set_size(obj, 277, 73);
+                                    lv_slider_set_value(obj, 25, LV_ANIM_OFF);
+                                    lv_obj_add_event_cb(obj, action_update_config, LV_EVENT_RELEASED, (void *)0);
+                                }
+                            }
+                        }
                         {
                             lv_obj_t *obj = lv_label_create(parent_obj);
                             lv_obj_set_pos(obj, 216, 36);
@@ -200,6 +225,15 @@ void create_screen_options() {
 }
 
 void tick_screen_options() {
+    {
+        const char *new_val = get_var_config();
+        const char *cur_val = lv_label_get_text(objects.obj3);
+        if (strcmp(new_val, cur_val) != 0) {
+            tick_value_change_obj = objects.obj3;
+            lv_label_set_text(objects.obj3, new_val);
+            tick_value_change_obj = NULL;
+        }
+    }
 }
 
 typedef void (*tick_screen_func_t)();

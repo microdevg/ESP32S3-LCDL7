@@ -13,25 +13,51 @@
 void action_change_window(lv_event_t * e) {
     // Agrega aquí tu lógica de LVGL, por ejemplo:
     if(e->user_data == 0){
-        lv_scr_load(objects.main);
+        loadScreen(SCREEN_ID_MAIN); 
+
     }  
     else{
-        lv_scr_load(objects.options);
+        loadScreen(SCREEN_ID_OPTIONS);
     }
 }
 
+extern void action_update_config(lv_event_t * e) {
+    lv_obj_t * slider = lv_event_get_target(e);
+    
+    // 2. Leer su valor actual
+    int32_t valor = lv_slider_get_value(slider);
+    
+    // 3. Convertir el entero a string y pasarlo a set_var_config
+    char valor_str[16];
+    snprintf(valor_str, sizeof(valor_str), "%d", (int)valor);
+    set_var_config(valor_str);
+   ui_tick(); // Con esta funcion refresco pantalla
+
+    ESP_LOGI("UI", "Nuevo valor del slider: %s", valor_str);
+}
+
+
+char config[100] = { "--"};
 char temp[100] = {""};
 
-const char *get_var_temp() {
+ const char *get_var_temp() {
     return temp;
 }
 
-void set_var_temp(const char *value) {
+void set_var_temp( const char *value) {
     strncpy(temp, value, sizeof(temp) / sizeof(char));
     temp[sizeof(temp) / sizeof(char) - 1] = 0;
 }
 
+ const char *get_var_config() {
+    return config;
+}
 
+void set_var_config( const char *value) {
+    strncpy(config, value, sizeof(config) / sizeof(char));
+    config[sizeof(config) / sizeof(char) - 1] = 0;
+    printf("update config");
+}
 
 esp_err_t display_init(void)
 {
